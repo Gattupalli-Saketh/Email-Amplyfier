@@ -8,17 +8,22 @@ CATEGORIES = ["Procurement",
                "General Inquiry",
                "Spam/Other"]
 
-def classify_email(email_text):
+MODEL_NAME = "MoritzLaurer/deberta-v3-large-zeroshot-v2.0"
+
+def classify_email(email_text: str,min_confidence: float = 0.45):
 
     """_summary_ : Classify the email into a categorgy using zer0- shot classification
 
     Args:
         email_text (_string_): _Based on thr input type the mail is classified_
     """
-    classifier = pipeline("zero-shot-classification",model = "facebook/bart-large-mnli")
+    classifier = pipeline("zero-shot-classification",model = MODEL_NAME)
     result = classifier(email_text,candidate_labels = CATEGORIES)
     top_category = result['labels'][0]
     confidence = result['scores'][0]
+    if confidence < min_confidence:
+        top_category = "Spam/Other"
+        confidence = 1.0 - confidence
     return top_category,confidence
 
 def generate_response(email_text,category):

@@ -7,5 +7,5 @@ This project aims to help the user with classification of a stack of mails based
 ## 🎯 Objective
 
 - 📨 Classify emails based on their intent  
-- 🤖 Generate AI-based responses  
+- 🤖 Generate AI-based responses and maintains thread
 - ⚡ Help users speed up their workflow
